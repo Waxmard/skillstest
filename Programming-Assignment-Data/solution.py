@@ -33,7 +33,7 @@ def pillow():
     # draw.line((0, img.size[1], img.size[0], 0), fill=128)
     # draw.line((200, 100, 300, 200), fill=(0, 0, 0), width=10)
     draw.rectangle(
-        (200, 125, 300, 200),
+        (80, 2119, 336, 2368),
         outline=(0, 0, 0),
         width=10)
 
