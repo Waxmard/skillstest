@@ -25,6 +25,7 @@ def main():
 
     print(allbounds)
 
+    intbounds = []
     # convert string bounds into list of 4 integer coordinates
     for bound in allbounds:
         bound = bound.split(',')
@@ -35,7 +36,10 @@ def main():
         bound.insert(2, tmp[1])
         bound[2] = int(bound[2][1:])
         print(bound)
-    return allbounds
+        intbounds.append(bound)
+    print()
+    print(intbounds)
+    return intbounds
 
     # String representation
     # print(ET.tostring(root, encoding='utf8').decode('utf8'))
