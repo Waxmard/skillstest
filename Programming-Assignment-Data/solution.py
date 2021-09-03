@@ -7,25 +7,40 @@ def main():
     root = tree.getroot()
 
     # prints each child (only one) and its attributes
-    for child in root:
-        print(child.tag, child.attrib)
+    # for child in root:
+    #     print(child.tag, child.attrib)
 
     print()
 
     # prints all elements in the tree
     # print([elem.tag for elem in root.iter()])
 
+    allbounds = []
 
     for node in root.iter():
         attributes = node.attrib
-        if attributes.get('clickable') == 'true':
-            print(attributes.get('bounds'))
-        else:
-            print(attributes.get('clickable'))
+        bounds = attributes.get('bounds')
+        if (bounds is not None) and (bounds != "[0,0][1440,2368]"):
+            allbounds.append(bounds)
+
+    print(allbounds)
+
+    # convert string bounds into list of 4 integer coordinates
+    for bound in allbounds:
+        bound = bound.split(',')
+        bound[0] = int(bound[0][1:])
+        bound[2] = int(bound[2][:-1])
+        tmp = bound[1].split(']')
+        bound[1] = int(tmp[0])
+        bound.insert(2, tmp[1])
+        bound[2] = int(bound[2][1:])
+        print(bound)
+    return allbounds
+
     # String representation
     # print(ET.tostring(root, encoding='utf8').decode('utf8'))
 
-def pillow():
+def pillow(bounds):
     img = Image.open('com.pandora.android.png')
 
     draw = ImageDraw.Draw(img)
@@ -40,5 +55,5 @@ def pillow():
     img.show()
 
 if __name__ == "__main__":
-    main()
-    pillow()
+    allbounds = main()
+    # pillow(allbounds)
