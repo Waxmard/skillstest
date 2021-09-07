@@ -1,6 +1,14 @@
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw
 
+xmlFiles = ['com.apalon.ringtones.xml',
+            'com.dropbox.android.xml',
+            'com.giphy.messenger-1.xml',
+            'com.giphy.messenger-2.xml',
+            'com.google.android.apps.translate.xml',
+            'com.pandora.android.xml',
+            'com.yelp.android.xml']
+
 def main():
     # uses element tree to parse the xml file and saves root to root
     tree = ET.parse('com.pandora.android.xml')
