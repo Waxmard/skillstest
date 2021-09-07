@@ -5,13 +5,18 @@ xmlFiles = ['com.apalon.ringtones.xml',
             'com.dropbox.android.xml',
             'com.giphy.messenger-1.xml',
             'com.giphy.messenger-2.xml',
-            'com.google.android.apps.translate.xml',
+            'com.google.android.apps.transalte.xml',
             'com.pandora.android.xml',
             'com.yelp.android.xml']
 
+currentFile = xmlFiles[6]
+
+# dont work -- index 0
+
 def main():
     # uses element tree to parse the xml file and saves root to root
-    tree = ET.parse('com.pandora.android.xml')
+    # tree = ET.parse('com.pandora.android.xml')
+    tree = ET.parse(currentFile)
     root = tree.getroot()
 
     # saves all string bounds from each node
@@ -37,15 +42,18 @@ def main():
     return intbounds
 
 def pillow(bounds):
-    img = Image.open('com.pandora.android.png')
+    # imageFile is the xml files' string name with .png extension instead of .xml
+    imageFile = currentFile.replace('xml', 'png')
 
+    img = Image.open(imageFile)
     draw = ImageDraw.Draw(img)
     
+    # draws rectangle over all significant bounds specified within xml file
     for bound in bounds:
         draw.rectangle(
         (bound[0], bound[1], bound[2], bound[3]),
-        outline=(0, 0, 0),
-        width=10
+        outline=('yellow'),
+        width=5
         )
 
     img.show()
