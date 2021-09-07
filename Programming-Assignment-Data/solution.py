@@ -9,11 +9,12 @@ xmlFiles = ['com.apalon.ringtones.xml',
             'com.pandora.android.xml',
             'com.yelp.android.xml']
 
-currentFile = xmlFiles[6]
-
-# dont work -- index 0
-
 def main():
+    for file in xmlFiles:
+        bounds = xmlParse(file)
+        pillow(bounds, file)
+
+def xmlParse(currentFile):
     # uses element tree to parse the xml file and saves root to root
     # tree = ET.parse('com.pandora.android.xml')
     tree = ET.parse(currentFile)
@@ -41,7 +42,7 @@ def main():
 
     return intbounds
 
-def pillow(bounds):
+def pillow(bounds, currentFile):
     # imageFile is the xml files' string name with .png extension instead of .xml
     imageFile = currentFile.replace('xml', 'png')
 
@@ -59,5 +60,6 @@ def pillow(bounds):
     img.show()
 
 if __name__ == "__main__":
-    bounds = main()
-    pillow(bounds)
+    # bounds = xmlParse()
+    # pillow(bounds)
+    main()
