@@ -12,25 +12,30 @@ xmlFiles = ['com.apalon.ringtones.xml',
 def main():
     for file in xmlFiles:
         bounds = xmlParse(file)
-        pillow(bounds, file)
+        painter(bounds, file)
 
+# returns significant pixel bounds into a list of lists, each list has 4 coordinates of the corners of the rectangle that need to be drawn 
 def xmlParse(currentFile):
+
     # uses element tree to parse the xml file and saves root to root
-    # tree = ET.parse('com.pandora.android.xml')
     tree = ET.parse(currentFile)
     root = tree.getroot()
 
-    # saves all string bounds from each node
+    # saves all string bounds from each node to allbounds
     allbounds = []
     for node in root.iter():
         attributes = node.attrib
         bounds = attributes.get('bounds')
+        # [0,0][1440,2368] is always the edge of the screen, this highlight is trivial and not needed
         if (bounds is not None) and (bounds != "[0,0][1440,2368]"):
             allbounds.append(bounds)
 
-    # convert string bounds into list of 4 integer coordinates
+    return convertInt(allbounds)
+
+# converts the string bounds from allbounds into lists (of 4 integer coordinates)
+def convertInt(stringBounds):
     intbounds = []
-    for bound in allbounds:
+    for bound in stringBounds:
         bound = bound.split(',')
         bound[0] = int(bound[0][1:])
         bound[2] = int(bound[2][:-1])
@@ -39,10 +44,10 @@ def xmlParse(currentFile):
         bound.insert(2, tmp[1])
         bound[2] = int(bound[2][1:])
         intbounds.append(bound)
-
     return intbounds
 
-def pillow(bounds, currentFile):
+# draws the rectangles on the image then outputs it in Preview
+def painter(bounds, currentFile):
     # imageFile is the xml files' string name with .png extension instead of .xml
     imageFile = currentFile.replace('xml', 'png')
 
@@ -60,6 +65,4 @@ def pillow(bounds, currentFile):
     img.show()
 
 if __name__ == "__main__":
-    # bounds = xmlParse()
-    # pillow(bounds)
     main()
